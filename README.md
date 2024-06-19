@@ -1,6 +1,9 @@
 # tt-equipment
 For Realms of Despair
 
+## Purpose
+This plugin updates a database of equipment that is referenced to display its information within TinTin++
+
 ## Instructions
 
 1. put the python scripts in your tintin /src directory
