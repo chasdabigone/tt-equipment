@@ -1,0 +1,223 @@
+#CLASS {equip} {OPEN}
+
+#VARIABLE {wearLocs} {light;finger1;finger2;neck1;neck2;body1;body2;body3;body4;body5;body6;head;legs;feet;hands1;hands2;arms;about1;about2;about3;about4;waist;shield;hold;wrist1;wrist2;wield1;wield2;ears;eyes;back;face;ankle1;ankle2}
+#VARIABLE {myEquip} {$wearLocs}
+#ACTION {<used as light>%s%*} {
+    clear_equip;
+    #VAR myEquip[light] %2;
+    #replace myEquip[light] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {^Object '%1' is infused with your magic...\n%a\n\n%*\Z} {
+	#var equip_name %1;
+  #var equip_stats %2;
+  #REPLACE equip_name {"} {\"};
+  #REPLACE equip_stats {"} {\"};
+	#system {
+		echo "Object '$equip_name' is infused with your magic..." >> Equip_DB.txt;
+		echo "$equip_stats\n" >> Equip_DB.txt
+		};
+	#system {
+		python remove-duplicates.py
+		};
+	#unvar equip_name;
+  #unvar equip_stats;
+	}
+
+#ACTION {<worn on finger>%s%*} {
+    #IF {&myEquip[finger1]} {
+        #VAR myEquip[finger2] %2;
+        #replace myEquip[finger2] {\(%*\)%s %!{|}\[%*\]%s } {};
+    } {
+        #VAR myEquip[finger1] %2;
+        #replace myEquip[finger1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+}
+
+#ACTION {<worn around neck>%s%*} {
+    #IF {&myEquip[neck1]} {
+        #VAR myEquip[neck2] %2;
+        #replace myEquip[neck2] {\(%*\)%s %!{|}\[%*\]%s } {};
+    } {
+        #VAR myEquip[neck1] %2;
+        #replace myEquip[neck1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+}
+
+#ACTION {<worn on body>%s%*} {
+    #IF {&myEquip[body1] != 0} {
+        #IF {&myEquip[body2] != 0} {
+            #IF {&myEquip[body3] != 0} {
+                #IF {&myEquip[body4] != 0} {
+                    #IF {&myEquip[body5] != 0} {
+                        #IF {&myEquip[body6] != 0} {
+                            #VAR myEquip[body6] %2;
+                            #replace myEquip[body6] {\(%*\)%s %!{|}\[%*\]%s } {};
+                        } {
+                            #VAR myEquip[body6] %2;
+                            #replace myEquip[body6] {\(%*\)%s %!{|}\[%*\]%s } {};
+                        }
+                    } {
+                        #VAR myEquip[body5] %2;
+                        #replace myEquip[body5] {\(%*\)%s %!{|}\[%*\]%s } {};
+                    }
+                } {
+                    #VAR myEquip[body4] %2;
+                    #replace myEquip[body4] {\(%*\)%s %!{|}\[%*\]%s } {};
+                }
+            } {
+                #VAR myEquip[body3] %2;
+                #replace myEquip[body3] {\(%*\)%s %!{|}\[%*\]%s } {};
+            }
+        } {
+            #VAR myEquip[body2] %2;
+            #replace myEquip[body2] {\(%*\)%s %!{|}\[%*\]%s } {};
+        }
+    } {
+        #VAR myEquip[body1] %2;
+        #replace myEquip[body1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+}
+
+#ACTION {<worn on head>%s%*} {
+    #VAR myEquip[head] %2;
+    #replace myEquip[head] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn on legs>%s%*} {
+    #VAR myEquip[legs] %2;
+    #replace myEquip[legs] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn on feet>%s%*} {
+    #VAR myEquip[feet] %2;
+    #replace myEquip[feet] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn on hands>%s%*} {
+    #IF {&myEquip[hands1]} {
+        #VAR myEquip[hands2] %2;
+        #replace myEquip[hands2] {\(%*\)%s %!{|}\[%*\]%s } {};
+    } {
+        #VAR myEquip[hands1] %2;
+        #replace myEquip[hands1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+}
+
+#ACTION {<worn on arms>%s%*} {
+    #VAR myEquip[arms] %2;
+    #replace myEquip[arms] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn as shield>%s%*} {
+    #VAR myEquip[shield] %2;
+    #replace myEquip[shield] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn about body>%s%*} {
+    #IF {&myEquip[about1] != 0} {
+        #IF {$myEquip[about2] != 0} {
+            #IF {$myEquip[about3] != 0} {
+                #IF {$myEquip[about4] != 0} {
+                    #VAR myEquip[about4] %2;
+                    #replace myEquip[about4] {\(%*\)%s %!{|}\[%*\]%s } {};
+                }; 
+				#ELSE {
+                    #VAR myEquip[about4] %2;
+                    #replace myEquip[about4] {\(%*\)%s %!{|}\[%*\]%s } {};
+                }
+            }; 
+			#ELSE {
+                #VAR myEquip[about3] %2;
+                #replace myEquip[about3] {\(%*\)%s %!{|}\[%*\]%s } {};
+            }
+        };
+		#ELSE {
+            #VAR myEquip[about2] %2;
+            #replace myEquip[about2] {\(%*\)%s %!{|}\[%*\]%s } {};
+        }
+    };
+	#ELSE {
+        #VAR myEquip[about1] %2;
+        #replace myEquip[about1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+}
+
+#ACTION {<worn about waist>%s%*} {
+    #VAR myEquip[waist] %2;
+    #replace myEquip[waist] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn around wrist>%s%*} {
+    #IF {&myEquip[wrist1]} {
+        #VAR myEquip[wrist2] %2;
+        #replace myEquip[wrist2] {\(%*\)%s %!{|}\[%*\]%s } {};
+    } {
+        #VAR myEquip[wrist1] %2;
+        #replace myEquip[wrist1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+}
+
+#ACTION {<wielded>%s%*} {
+    #VAR myEquip[wield1] %2;
+    #replace myEquip[wield1] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<dual wielded>%s%*} {
+    #VAR myEquip[wield2] %2;
+    #replace myEquip[wield2] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<held>%s%*} {
+    #VAR myEquip[hold] %2;
+    #replace myEquip[hold] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn on ears>%s%*} {
+    #VAR myEquip[ears] %2;
+    #replace myEquip[ears] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn on eyes>%s%*} {
+    #VAR myEquip[eyes] %2;
+    #replace myEquip[eyes] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn on back>%s%*} {
+    #VAR myEquip[back] %2;
+    #replace myEquip[back] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn over face>%s%*} {
+    #VAR myEquip[face] %2;
+    #replace myEquip[face] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
+
+#ACTION {<worn around ankle>%s%*} {
+    #IF {&myEquip[ankle1]} {
+        #VAR myEquip[ankle2] %2;
+        #replace myEquip[ankle2] {\(%*\)%s %!{|}\[%*\]%s } {};
+    } {
+        #VAR myEquip[ankle1] %2;
+        #replace myEquip[ankle1] {\(%*\)%s %!{|}\[%*\]%s } {};
+    }
+
+}
+
+#ALIAS clear_equip {
+    #VARIABLE {myEquip} {$wearLocs};
+
+    #SHOWME Equipment has been cleared.;
+}
+
+#ALIAS {geteq} {
+	#system {python3 statgrabber.py "$myEquip"};
+}
+
+#ALIAS {searcheq}
+{
+    #variable searcheq {search %0};
+    #system {python3 statgrabber.py $searcheq}
+}
+
+#CLASS {equip} {CLOSE}
