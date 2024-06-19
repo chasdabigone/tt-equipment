@@ -4,6 +4,7 @@
 #VARIABLE {myEquip} {$wearLocs}
 #ACTION {<used as light>%s%*} {
     clear_equip;
+    #showme Updating equipment...;
     #VAR myEquip[light] %2;
     #replace myEquip[light] {\(%*\)%s %!{|}\[%*\]%s } {};
 }
@@ -211,7 +212,10 @@
 }
 
 #ALIAS {geteq} {
-	#system {python3 statgrabber.py "$myEquip"};
+  #IF {"$myEquip[]" != ""} {
+	  #system {python3 statgrabber.py "$myEquip"};
+  };
+  #ELSE {#showme Type 'garb' to initialize equipment}
 }
 
 #ALIAS {searcheq}
