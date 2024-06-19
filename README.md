@@ -16,3 +16,5 @@ use the command 'searcheq' to search i.e. 'searcheq demonic whispers'
 items will be added to Equip_DB.txt automatically when you identify them if they are not already in it
 
 ![module](https://github.com/chasdabigone/tt-equipment/assets/13225826/98f11221-5e9f-4160-96e8-324b78565ff5)
+
+For a GUI to use with Equip_DB.txt, see https://github.com/chasdabigone/RoD_Equipment_Search
