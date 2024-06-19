@@ -2,7 +2,7 @@
 For Realms of Despair
 
 ## Purpose
-This plugin updates a database of equipment that is referenced to display its information within TinTin++
+This plugin updates and displays equipment information in TinTin++
 
 ## Instructions
 
