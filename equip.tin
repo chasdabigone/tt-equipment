@@ -2,12 +2,6 @@
 
 #VARIABLE {wearLocs} {light;finger1;finger2;neck1;neck2;body1;body2;body3;body4;body5;body6;head;legs;feet;hands1;hands2;arms;about1;about2;about3;about4;waist;shield;hold;wrist1;wrist2;wield1;wield2;ears;eyes;back;face;ankle1;ankle2}
 #VARIABLE {myEquip} {$wearLocs}
-#ACTION {<used as light>%s%*} {
-    clear_equip;
-    #showme Updating equipment...;
-    #VAR myEquip[light] %2;
-    #replace myEquip[light] {\(%*\)%s %!{|}\[%*\]%s } {};
-}
 
 #ACTION {^Object '%1' is infused with your magic...\n%a\n\n%*\Z} {
 	#var equip_name %1;
@@ -24,6 +18,13 @@
 	#unvar equip_name;
   #unvar equip_stats;
 	}
+
+#ACTION {<used as light>%s%*} {
+    clear_equip;
+    #showme Updating equipment...;
+    #VAR myEquip[light] %2;
+    #replace myEquip[light] {\(%*\)%s %!{|}\[%*\]%s } {};
+}
 
 #ACTION {<worn on finger>%s%*} {
     #IF {&myEquip[finger1]} {
@@ -207,8 +208,6 @@
 
 #ALIAS clear_equip {
     #VARIABLE {myEquip} {$wearLocs};
-
-    #SHOWME Equipment has been cleared.;
 }
 
 #ALIAS {geteq} {
@@ -221,7 +220,8 @@
 #ALIAS {searcheq}
 {
     #variable searcheq {search %0};
-    #system {python3 statgrabber.py $searcheq}
+    #REPLACE searcheq {'} {\'};
+    #system {python3 statgrabber.py $searcheq};
 }
 
 #CLASS {equip} {CLOSE}
